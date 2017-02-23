@@ -1,0 +1,135 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+<body>
+	<section layout:fragment="content" class="content-body">
+		<header class="page-header">
+			<h2>Project Manager</h2>
+
+			<div class="right-wrapper pull-right">
+				<ol class="breadcrumbs">
+					<li><a href="/projects/"> <i class="fa fa-home"></i>
+					</a></li>
+					<li><span>Project Manager</span></li>
+				</ol>
+
+				<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+			</div>
+		</header>
+
+		<!-- start: page -->
+		<!-- 				Form -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+						<h2 align="center" class="panel-title">Add Project</h2>
+					</header>
+					<div class="panel-body">
+						<form class="form-horizontal form-bordered" method="POST" action="save" th:object="${project}">
+							<div class="form-group col-md-12">
+								<div class="row">
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">Code</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">Label</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">Type</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">State</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3">
+										<input th:value="*{projectId}" type="hidden" name="projectId"></input>
+										<input th:value="*{code}" type="text" name="code" size="20" class="demande form-control input-rounded" placeholder="Project Code"></input>
+									</div>
+									<div class="col-md-3">
+										<input th:value="*{label}" type="text" name="label" size="20" class="demande form-control input-rounded" placeholder="Project label"></input>
+									</div>
+									<div class="col-md-3">
+										<select th:field="*{type}" name="type" class="form-control" data-plugin-multiselect="true" id="ms_example1">
+											<option th:each="var : ${typeList}"
+                             						th:value="${var.typeId}"
+                             						th:text="${var.label}" ></option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<select th:field="*{state}" name="state" class="form-control" data-plugin-multiselect="true" id="ms_example1" >
+											<option th:each="var : ${stateList}"
+                             						th:value="${var.stateId}"
+                             						th:text="${var.label}" ></option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<div class="col-md-4"></div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-lg btn-block" type="submit" value="Save">
+										<i class="fa fa-save"></i> Save
+									</button>
+								</div>
+								<div class="col-md-2">
+									<a href="/projects/" type="button" class="btn btn-warning btn-lg btn-block"><i class="fa fa-refresh"></i> Refresh</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- 				Table -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+
+						<h2 align="center" class="panel-title">Project List</h2>
+					</header>
+					<div class="panel-body">
+						<div  class="table-responsive">
+							<table class="table  table-striped mb-none" id="datatable-tabletools"
+								data-swf-path="/assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th style="text-align: left" width="8%">ID.</th>
+										<th style="text-align: left" width="10%">Code</th>
+										<th style="text-align: left" width="20%">Label</th>
+										<th style="text-align: left" width="10%">Type</th>
+										<th style="text-align: left" width="10%">State</th>
+										<th width="20%">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="var : ${projectList}">
+										<td th:text="${var.projectId}"></td>
+										<td th:text="${var.code}"></td>
+										<td th:text="${var.label}"></td>
+										<td th:text="${var.type.label}"></td>
+										<td th:text="${var.state.label}"></td>
+										<td><a th:href="@{update(id=${var.projectId})}" type="button" class="btn btn-info "><i class="fa fa-edit"></i> </a>
+											<a th:href="@{delete(id=${var.projectId})}" type="button" class="btn btn-danger "><i class="fa fa-trash-o"></i> </a>
+											<a th:href="@{/workOrders/home(id=${var.projectId})}" type="button" class="btn btn-info "><i class="fa fa-share"></i> </a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>

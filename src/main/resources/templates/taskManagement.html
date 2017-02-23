@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+<body>
+	<section layout:fragment="content" class="content-body">
+		<header class="page-header">
+			<h2>Task Manager</h2>
+
+			<div class="right-wrapper pull-right">
+				<ol class="breadcrumbs">
+					<li><a href="/projects/"> <i class="fa fa-home"></i>
+					</a></li>
+					<li><span>Task Manager</span></li>
+				</ol>
+
+				<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+			</div>
+		</header>
+
+		<!-- start: page -->
+		<!-- 				Form -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+						<h2 align="center" class="panel-title">Add Task for Work Order : <a th:href="@{/tasks/update(id=${task.workOrder.workOrderId})}" th:text="${task.workOrder.label}"></a></h2>
+					</header>
+					<div class="panel-body">
+						<form class="form-horizontal form-bordered" method="POST" action="save" th:object="${task}">
+							
+							<div class="form-group col-md-12">
+								<div class="row">
+									<div class="col-md-6 center">
+										<label class="control-lable" for="file">Label</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">cost/H</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">Task date</label>
+									</div>
+									
+								</div>
+								<div class="row">
+									<div class="col-md-3">
+										<input th:value="*{taskId}" type="hidden" name="taskId"></input>
+										<input th:field="*{workOrder}" type="hidden" name="workOrder"></input>
+										<input th:value="*{label}" type="text" name="label" size="20" class="demande form-control input-rounded" placeholder="Label"></input>
+									</div>
+	
+									<div class="col-md-3">
+										<input th:value="*{cost}" type="number" name="cost" size="4" class="demande form-control input-rounded" placeholder="cost"></input>
+									</div>
+									<div class="col-md-3">
+										<div class="input-group">
+											<span class="input-group-addon"> 
+												<i class="fa fa-calendar"></i>
+											</span>
+											<input th:value="*{taskDate}" name="taskDate" required="true" data-plugin-datepicker="true" class="form-control"></input>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<div class="col-md-4"></div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-lg btn-block" type="submit" value="Save">
+										<i class="fa fa-save"></i> Save
+									</button>
+								</div>
+								<div class="col-md-2">
+									<a th:href="@{/tasks/home(id=${task.workOrder.workOrderId})}" type="button" class="btn btn-warning btn-lg btn-block"><i class="fa fa-refresh"></i> Refresh</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- 				Table -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+
+						<h2 align="center" class="panel-title">Task List for Work Order :  <a th:href="@{/tasks/update(id=${task.workOrder.workOrderId})}" th:text="${task.workOrder.label}"></a></h2>
+					</header>
+					<div class="panel-body">
+						<div  class="table-responsive">
+							<table class="table  table-striped mb-none" id="datatable-tabletools"
+								data-swf-path="/assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th style="text-align: left" width="8%">ID.</th>
+										<th style="text-align: left" width="20%">Label</th>
+										<th style="text-align: left" width="10%">Task date</th>
+										<th style="text-align: left" width="10%">Task cost</th>
+										<th width="20%">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="var : ${taskList}">
+										<td th:text="${var.taskId}"></td>
+										<td th:text="${var.label}"></td>
+										<td th:text="${var.taskDate}"></td>
+										<td th:text="${var.cost}"></td>
+										<td><a th:href="@{update(id=${var.taskId})}" type="button" class="btn btn-info "><i class="fa fa-edit"></i> </a>
+											<a th:href="@{delete(id=${var.taskId})}" type="button" class="btn btn-danger "><i class="fa fa-trash-o"></i> </a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<body>
+			<section layout:fragment="content" class="content-body">
+				<header class="page-header">
+					<h2>Type Manager</h2>
+
+					<div class="right-wrapper pull-right">
+						<ol class="breadcrumbs">
+							<li><a href="/types/"> <i class="fa fa-home"></i>
+							</a></li>
+							<li><span>Type Manager</span></li>
+						</ol>
+
+						<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+					</div>
+				</header>
+
+				<!-- start: page -->
+				<!-- 				Form -->
+				<div class="row">
+					<div class="col-md-12">
+						<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+								</div>
+								<h2 align="center" class="panel-title">Add Type</h2>
+							</header>
+							<div class="panel-body">
+								<form class="form-horizontal form-bordered" method="POST" action="save" th:object="${type}">
+									<input th:value="*{typeId}" type="hidden" name="typeId" size="20"></input>
+									<div class="form-group col-md-12">
+										<div class="row">
+											<div class="col-md-4 center">
+												<label class="control-lable" for="file">Code</label>
+											</div>
+											<div class="col-md-8 center">
+												<label class="control-lable" for="file">Label</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<input th:value="*{code}" type="text" name="code" size="20" class="demande form-control input-rounded" placeholder="Type Code" ></input>
+											</div>
+											<div class="col-md-8">
+												<input th:value="*{label}" type="text" name="label" size="20" class="demande form-control input-rounded" placeholder="First Name" ></input>
+											</div>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<div class="col-md-4"></div>
+										<div class="col-md-2">
+											<button class="btn btn-success btn-lg btn-block" type="submit" value="Save" ><i class="fa fa-save"></i> Save </button>
+										</div>
+										<div class="col-md-2">	
+											<a href="/types/" type="button" class="btn btn-warning btn-lg btn-block"><i class="fa fa-refresh"></i> Refresh</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</section>
+					</div>
+				</div>
+
+				<!-- 				Table -->
+				<div class="row">
+					<div class="col-md-12">
+						<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+								</div>
+
+								<h2 align="center" class="panel-title">Type List</h2>
+							</header>
+							<div class="panel-body">
+								<div th:unless="${#lists.isEmpty(typeList)}" class="table-responsive">
+									<table class="table table-bordered table-striped mb-none" id="datatable-tabletools"
+										data-swf-path="/assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+										<thead>
+											<tr>
+												<th style="text-align: left" width="20%">ID.</th>
+												<th style="text-align: center" width="20%">Code</th>
+												<th style="text-align: center" width="20%">Label</th>
+												<th width="20%">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="type : ${typeList}">
+												<td th:text="${type.typeId}"></td>
+												<td th:text="${type.code}"></td>
+												<td th:text="${type.label}"></td>
+												<td>
+												 <a th:href="@{update(id=${type.typeId})}" type="button" class="btn btn-info  "><i class="fa fa-edit"></i> </a>
+												<a th:href="@{delete(id=${type.typeId})}" type="button" class="btn btn-danger "><i class="fa fa-trash-o"></i> </a>
+												
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div th:if="${#lists.isEmpty(typeList)}">
+									<p align="center">
+										<strong>No types available</strong>
+									</p>
+								</div>
+							</div>
+						</section>
+					</div>
+
+				</div>
+			</section>
+
+</body>
+</html>

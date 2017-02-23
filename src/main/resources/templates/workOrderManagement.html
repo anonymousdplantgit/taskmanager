@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+<body>
+	<section layout:fragment="content" class="content-body">
+		<header class="page-header">
+			<h2>Project Manager</h2>
+
+			<div class="right-wrapper pull-right">
+				<ol class="breadcrumbs">
+					<li><a href="/projects/"> <i class="fa fa-home"></i>
+					</a></li>
+					<li><span>WorkOrder Manager</span></li>
+				</ol>
+
+				<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+			</div>
+		</header>
+
+		<!-- start: page -->
+		<!-- 				Form -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+						<h2 align="center" class="panel-title">Add Work Order for Project : <a th:href="@{/projects/update(id=${workOrder.project.projectId})}" th:text="${workOrder.project.label}"></a></h2>
+					</header>
+					<div class="panel-body">
+						<form class="form-horizontal form-bordered" method="POST" action="save" th:object="${workOrder}">
+							
+							<div class="form-group col-md-12">
+								<div class="row">
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">Label</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">affected to</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">estimated cost/H</label>
+									</div>
+									<div class="col-md-3 center">
+										<label class="control-lable" for="file">estimated end date</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3">
+										<input th:value="*{workOrderId}" type="hidden" name="workOrderId"></input>
+										<input th:field="*{project}" type="hidden" name="project"></input>
+										<input th:value="*{label}" type="text" name="label" size="20" class="demande form-control input-rounded" placeholder="Label"></input>
+									</div>
+	
+									<div class="col-md-3">
+										<select th:field="*{ressource}" name="ressource" class="form-control" data-plugin-multiselect="true" id="ms_example1" >
+											<option th:each="var : ${ressourceList}"
+                             						th:value="${var.ressourceId}"
+                             						th:text="${var.lastName}" ></option>
+										</select>
+									</div>
+									<div class="col-md-3">
+										<input th:value="*{estimatedCost}" type="number" name="estimatedCost" size="4" class="demande form-control input-rounded" placeholder="cost"></input>
+									</div>
+									<div class="col-md-3">
+										<div class="input-group">
+											<span class="input-group-addon"> 
+												<i class="fa fa-calendar"></i>
+											</span>
+											<input th:value="*{estimatedEndDate}" name="estimatedEndDate" required="true" data-plugin-datepicker="true" class="form-control"></input>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<div class="col-md-4"></div>
+								<div class="col-md-2">
+									<button class="btn btn-success btn-lg btn-block" type="submit" value="Save">
+										<i class="fa fa-save"></i> Save
+									</button>
+								</div>
+								<div class="col-md-2">
+									<a th:href="@{/workOrders/home(id=${workOrder.project.projectId})}" type="button" class="btn btn-warning btn-lg btn-block"><i class="fa fa-refresh"></i> Refresh</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<!-- 				Table -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="fa fa-caret-down"></a> <a href="#" class="fa fa-times"></a>
+						</div>
+
+						<h2 align="center" class="panel-title">Work Order List for project :  <a th:href="@{/projects/update(id=${workOrder.project.projectId})}" th:text="${workOrder.project.label}"></a></h2>
+					</header>
+					<div class="panel-body">
+						<div  class="table-responsive">
+							<table class="table  table-striped mb-none" id="datatable-tabletools"
+								data-swf-path="/assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+								<thead>
+									<tr>
+										<th style="text-align: left" width="8%">ID.</th>
+										<th style="text-align: left" width="20%">Project</th>
+										<th style="text-align: left" width="20%">Label</th>
+										<th style="text-align: left" width="10%">affected to</th>
+										<th style="text-align: left" width="10%">estimated cost/H</th>
+										<th style="text-align: left" width="10%">estimated end date</th>
+										<th width="20%">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="var : ${workOrderList}">
+										<td th:text="${var.workOrderId}"></td>
+										<td th:text="${var.project.label}"></td>
+										<td th:text="${var.label}"></td>
+										<td th:text="${var.ressource.lastName}"></td>
+										<td th:text="${var.estimatedCost}"></td>
+										<td th:text="${var.estimatedEndDate}"></td>
+										<td><a th:href="@{update(id=${var.workOrderId})}" type="button" class="btn btn-info "><i class="fa fa-edit"></i> </a>
+											<a th:href="@{delete(id=${var.workOrderId})}" type="button" class="btn btn-danger "><i class="fa fa-trash-o"></i> </a>
+											<a th:href="@{/tasks/home(id=${var.workOrderId})}" type="button" class="btn btn-info "><i class="fa fa-share"></i> </a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+	</section>
+
+</body>
+</html>
