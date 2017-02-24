@@ -1,5 +1,6 @@
 package com.soucreation.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,18 @@ public class RessourceController {
 	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model,Principal principal) {
 		List<Ressource> ressourceList = ressourceRepository.findAll(SORTING_DESC);
 		if (ressourceList != null) {
 			model.addAttribute("ressourceList", ressourceList);
 		}
 		model.addAttribute("ressource", new Ressource());
+		model.addAttribute("userName", principal.getName());
 		return "ressourceManagement";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Model model, Ressource ressource) {
+	public String save(Model model, Ressource ressource,Principal principal) {
 		try{
 			ressourceRepository.save(ressource);
 		}
@@ -45,11 +47,12 @@ public class RessourceController {
 			model.addAttribute("ressourceList", ressourceList);
 		}
 		model.addAttribute("ressource", new Ressource());
+		model.addAttribute("userName", principal.getName());
 		return "ressourceManagement";
 	}
 	
 	@RequestMapping(value = "/update{id}", method = RequestMethod.GET)
-	public String update(Model model, Long id) {
+	public String update(Model model, Long id,Principal principal) {
 		Ressource r = null;
 		try{
 			 r=ressourceRepository.findOne(id);
@@ -63,11 +66,12 @@ public class RessourceController {
 			model.addAttribute("ressourceList", ressourceList);
 			model.addAttribute("ressource", r);
 		}
+		model.addAttribute("userName", principal.getName());
 		return "ressourceManagement";
 	}
 	
 	@RequestMapping(value = "/delete{id}", method = RequestMethod.GET)
-	public String delete(Long id,Model model) {
+	public String delete(Long id,Model model,Principal principal) {
 		try{
 			ressourceRepository.delete(id);
 		}
@@ -80,6 +84,7 @@ public class RessourceController {
 			model.addAttribute("ressourceList", ressourceList);
 		}
 		model.addAttribute("ressource", new Ressource());
+		model.addAttribute("userName", principal.getName());
 		return "ressourceManagement";
 	}
 }

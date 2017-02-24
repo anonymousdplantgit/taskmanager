@@ -43,7 +43,7 @@
 									
 								</div>
 								<div class="row">
-									<div class="col-md-3">
+									<div class="col-md-6">
 										<input th:value="*{taskId}" type="hidden" name="taskId"></input>
 										<input th:field="*{workOrder}" type="hidden" name="workOrder"></input>
 										<input th:value="*{label}" type="text" name="label" size="20" class="demande form-control input-rounded" placeholder="Label"></input>
@@ -92,8 +92,8 @@
 					</header>
 					<div class="panel-body">
 						<div  class="table-responsive">
-							<table class="table  table-striped mb-none" id="datatable-tabletools"
-								data-swf-path="/assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+							<table class="table  table-hover table-condensed mb-none" id="datatable-tabletools"
+								data-swf-path="/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 								<thead>
 									<tr>
 										<th style="text-align: left" width="8%">ID.</th>

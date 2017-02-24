@@ -32,14 +32,45 @@
 		<!-- start: header -->
 		<header class="header">
 			<div class="logo-container">
-				<a href="#" class="logo"> <img src="/assets/images/CGI-logo.png" height="35" alt="Porto Admin" ></img>
+<!-- 				<a href="#" class="logo"> <img src="/assets/images/CGI-logo.png" height="35" alt="Porto Admin" ></img> -->
 				</a>
 				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
 				</div>
 			</div>
 			<!-- start: search & user box -->
-
+			<div class="header-right">
+			<span class="separator"></span>
+			
+					<div id="userbox" class="userbox">
+						<a href="#" data-toggle="dropdown">
+							<figure class="profile-picture">
+								<img src="/assets/images/%21logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/%21logged-user.jpg" />
+							</figure>
+							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+								<span class="name"><span th:text="${userName}"></span></span>
+								<span class="role"><span th:text="${email}"></span></span>
+							</div>
+			
+							<i class="fa custom-caret"></i>
+						</a>
+			
+						<div class="dropdown-menu">
+							<ul class="list-unstyled">
+								<li class="divider"></li>
+								<li>
+									<a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> My Profile</a>
+								</li>
+								<li>
+									<a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
+								</li>
+								<li>
+									<a role="menuitem" tabindex="-1" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			<!-- end: search & user box -->
 		</header>
 		<!-- end: header -->
@@ -59,19 +90,44 @@
 					<div class="nano-content">
 						<nav id="menu" class="nav-main" role="navigation">
 							<ul class="nav nav-main">
-								<li class="nav-active"><a href="/"> <i class="fa fa-home" aria-hidden="true"></i> <span>Dashboard</span>
+								<li class="nav-active"><a href="/home"> <i class="fa fa-home" aria-hidden="true"></i> <span>Dashboard</span>
 								</a></li>
 								
-								<li class="nav-active"><a href="/types/"> <i class="fa fa-file-text-o" aria-hidden="true"></i> <span>Project types </span>
-								</a></li>
 								
-								<li class="nav-active"><a href="/states/"> <i class="fa fa-file-text-o" aria-hidden="true"></i> <span>Project states </span>
-								</a></li>
-
-								<li class="nav-active"><a href="/ressources/"> <i class="fa fa-file-excel-o" aria-hidden="true"></i> <span> Ressources  </span>
-								</a></li>
-
-								<li class="nav-active"><a href="/projects/"> <i class="fa fa-file-text-o" aria-hidden="true"></i> <span>Projects manager</span>
+								<li class="nav-parent">
+										<a>
+											<i class="fa fa-gear" aria-hidden="true"></i>
+											<span>Configuration</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="/types/">
+												<i class="fa fa-reorder" aria-hidden="true"></i> 
+													<span>
+													Project types 
+													 </span>
+												</a>
+											</li>
+											<li>
+												<a href="/states/">
+												<i class="fa fa-flag" aria-hidden="true"></i> 
+													<span>
+													 Project states
+													  </span>
+												</a>
+											</li>
+											<li>
+												<a href="/ressources/">
+												<i class="fa fa-users" aria-hidden="true"></i> 
+													<span>
+													 Ressources
+													 </span>
+												</a>
+											</li>
+									      </ul>
+								</li>
+								
+								<li class="nav-active"><a href="/projects/"> <i class="fa fa-sliders" aria-hidden="true"></i> <span>Projects manager</span>
 								</a></li>
 								
 								

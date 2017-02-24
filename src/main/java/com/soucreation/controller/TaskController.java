@@ -1,5 +1,6 @@
 package com.soucreation.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = "/home{id}", method = RequestMethod.GET)
-	public String home(Model model, Long id) {
+	public String home(Model model, Long id,Principal principal) {
 		List<Task> taskList = taskRepository.findByWorkOrderWorkOrderId((id));
 		WorkOrder workOrder = workOrderRepository.findOne(id);
 		Task task = new Task();
@@ -35,11 +36,12 @@ public class TaskController {
 			model.addAttribute("taskList", taskList);
 		}
 		model.addAttribute("task", task);
+		model.addAttribute("userName", principal.getName());
 		return "taskManagement";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Model model, Task task) {
+	public String save(Model model, Task task,Principal principal) {
 		try {
 			taskRepository.save(task);
 		} catch (Exception e) {
@@ -52,11 +54,12 @@ public class TaskController {
 		Task w = new Task();
 		w.setWorkOrder(task.getWorkOrder());
 		model.addAttribute("task", w);
+		model.addAttribute("userName", principal.getName());
 		return "taskManagement";
 	}
 
 	@RequestMapping(value = "/update{id}", method = RequestMethod.GET)
-	public String update(Model model, Long id) {
+	public String update(Model model, Long id,Principal principal) {
 		Task r = null;
 		try {
 			r = taskRepository.findOne(id);
@@ -68,11 +71,12 @@ public class TaskController {
 			model.addAttribute("taskList", taskList);
 			model.addAttribute("task", r);
 		}
+		model.addAttribute("userName", principal.getName());
 		return "taskManagement";
 	}
 
 	@RequestMapping(value = "/delete{id}", method = RequestMethod.GET)
-	public String delete(Long id, Model model) {
+	public String delete(Long id, Model model,Principal principal) {
 		Task task = taskRepository.findOne(id);
 		try {
 			taskRepository.delete(id);
@@ -87,6 +91,7 @@ public class TaskController {
 		task = new Task();
 		task.setWorkOrder(workOrder);
 		model.addAttribute("task", task);
+		model.addAttribute("userName", principal.getName());
 		return "taskManagement";
 	}
 }

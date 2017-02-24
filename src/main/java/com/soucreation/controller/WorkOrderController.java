@@ -1,5 +1,6 @@
 package com.soucreation.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class WorkOrderController {
 	}
 	
 	@RequestMapping(value = "/home{id}", method = RequestMethod.GET)
-	public String home(Model model,Long id) {
+	public String home(Model model,Long id,Principal principal) {
 		List<WorkOrder> workOrderList = workOrderRepository.findByProjectProjectId((id));
 		List<Ressource> ressourceList = ressourceRepository.findAll(SORTING_DESC_STATE);
 		Project project=projectRepository.findOne(id);
@@ -47,7 +48,7 @@ public class WorkOrderController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Model model, WorkOrder workOrder) {
+	public String save(Model model, WorkOrder workOrder,Principal principal) {
 		try{
 			workOrderRepository.save(workOrder);
 		}
@@ -64,11 +65,12 @@ public class WorkOrderController {
 		WorkOrder w=new WorkOrder();
 		w.setProject(workOrder.getProject());
 		model.addAttribute("workOrder", w);
+		model.addAttribute("userName", principal.getName());
 		return "workOrderManagement";
 	}
 	
 	@RequestMapping(value = "/update{id}", method = RequestMethod.GET)
-	public String update(Model model, Long id) {
+	public String update(Model model, Long id,Principal principal) {
 		WorkOrder r = null;
 		try{
 			 r=workOrderRepository.findOne(id);
@@ -84,11 +86,12 @@ public class WorkOrderController {
 			model.addAttribute("workOrderList", workOrderList);
 			model.addAttribute("workOrder", r);
 		}
+		model.addAttribute("userName", principal.getName());
 		return "workOrderManagement";
 	}
 	
 	@RequestMapping(value = "/delete{id}", method = RequestMethod.GET)
-	public String delete(Long id,Model model) {
+	public String delete(Long id,Model model,Principal principal) {
 		WorkOrder workOrder=workOrderRepository.findOne(id);
 		try{
 			workOrderRepository.delete(id);
@@ -107,6 +110,7 @@ public class WorkOrderController {
 		workOrder=new WorkOrder();
 		workOrder.setProject(project);
 		model.addAttribute("workOrder", workOrder);
+		model.addAttribute("userName", principal.getName());
 		return "workOrderManagement";
 	}
 }
